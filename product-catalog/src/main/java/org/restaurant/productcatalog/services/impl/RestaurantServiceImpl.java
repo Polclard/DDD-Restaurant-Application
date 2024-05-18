@@ -7,6 +7,7 @@ import org.restaurant.productcatalog.domain.models.RestaurantId;
 import org.restaurant.productcatalog.domain.repository.RestaurantRepository;
 import org.restaurant.productcatalog.services.RestaurantService;
 import org.restaurant.productcatalog.services.form.RestaurantForm;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

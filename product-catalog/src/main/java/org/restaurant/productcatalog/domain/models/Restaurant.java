@@ -1,12 +1,14 @@
 package org.restaurant.productcatalog.domain.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.restaurant.productcatalog.domain.valueObjects.Capacity;
 import org.restaurant.sharedkernel.domain.base.AbstractEntity;
 import org.restaurant.sharedkernel.domain.financial.Money;
 
 @Entity
 @Table(name = "restaurant")
+@Getter
 public class Restaurant extends AbstractEntity<RestaurantId> {
 
     private String name;

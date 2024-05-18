@@ -3,6 +3,7 @@ package org.restaurant.ordermanagement.domain.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.restaurant.ordermanagement.domain.model.enumerated.Status;
+import org.restaurant.ordermanagement.domain.valueObjects.Client;
 import org.restaurant.ordermanagement.domain.valueObjects.Restaurant;
 import org.restaurant.sharedkernel.domain.base.AbstractEntity;
 import org.restaurant.sharedkernel.domain.financial.Currency;
@@ -52,13 +53,15 @@ public class Order extends AbstractEntity<OrderId> {
     public Reservation addItem(@NonNull Restaurant restaurant,
                                int qty,
                                int numberOfClients,
-                               LocalDateTime reservationDate) {
+                               LocalDateTime reservationDate,
+                               @NonNull Client client) {
         Objects.requireNonNull(restaurant,"Reservation must not be null");
         var item = new Reservation(restaurant.getRestaurantId(),
                 restaurant.getPrice(),
                 qty,
                 numberOfClients,
-                reservationDate);
+                reservationDate,
+                client.getClientId());
         reservationsList.add(item);
         return item;
     }

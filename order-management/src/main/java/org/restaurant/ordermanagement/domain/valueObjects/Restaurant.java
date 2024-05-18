@@ -40,5 +40,4 @@ public class Restaurant implements ValueObject {
         this.price = price;
         this.sales = sales;
     }
-
 }

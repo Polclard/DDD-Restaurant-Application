@@ -13,7 +13,7 @@ import org.restaurant.ordermanagement.services.OrderService;
 import org.restaurant.ordermanagement.services.forms.OrderForm;
 import org.restaurant.ordermanagement.services.forms.ReservationForm;
 import org.restaurant.sharedkernel.domain.events.orders.ReservationCreated;
-import org.restaurant.sharedkernel.infra.DomainEventPublisher;
+//import org.restaurant.sharedkernel.infra.DomainEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -28,7 +28,7 @@ import jakarta.validation.Validator;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final DomainEventPublisher domainEventPublisher;
+//    private final DomainEventPublisher domainEventPublisher;
     private final Validator validator;
 
 
@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
             throw new ConstraintViolationException("The order form is not valid", constraintViolations);
         }
         var newOrder = orderRepository.saveAndFlush(toDomainObject(orderForm));
-        newOrder.getReservationsList().forEach(item->domainEventPublisher.publish(new ReservationCreated(item.getRestaurantId().getId(),item.getQuantity())));
+//        newOrder.getReservationsList().forEach(item->domainEventPublisher.publish(new ReservationCreated(item.getRestaurantId().getId(),item.getQuantity())));
         return newOrder.getId();
     }
 
@@ -60,10 +60,11 @@ public class OrderServiceImpl implements OrderService {
         order.addItem(reservationForm.getRestaurant(),
                 reservationForm.getQuantity(),
                 reservationForm.getNumberOfClients(),
-                reservationForm.getReservationDate()
+                reservationForm.getReservationDate(),
+                reservationForm.getClient()
                 );
         orderRepository.saveAndFlush(order);
-        domainEventPublisher.publish(new ReservationCreated(reservationForm.getRestaurant().getRestaurantId().getId(),reservationForm.getQuantity()));
+//        domainEventPublisher.publish(new ReservationCreated(reservationForm.getRestaurant().getRestaurantId().getId(),reservationForm.getQuantity()));
     }
 
     @Override
@@ -78,7 +79,8 @@ public class OrderServiceImpl implements OrderService {
         orderForm.getItems().forEach(item->order.addItem(item.getRestaurant(),
                 item.getQuantity(),
                 item.getNumberOfClients(),
-                item.getReservationDate()));
+                item.getReservationDate(),
+                item.getClient()));
         return order;
     }
 
